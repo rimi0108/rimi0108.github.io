@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[Django] Django Custom Command - rimlog</title>
-<meta name="description" content="Django Custom Command를 만들고 사용해보자!">
+<!-- begin _includes/seo.html --><title>[Django] DateTimeField - rimlog</title>
+<meta name="description" content="Django DateTimeField에 대해 알아보자">
 
 
   <meta name="author" content="Rim">
@@ -22,19 +22,19 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="rimlog">
-<meta property="og:title" content="[Django] Django Custom Command">
-<meta property="og:url" content="http://localhost:4000/til/custom-command/">
+<meta property="og:title" content="[Django] DateTimeField">
+<meta property="og:url" content="http://localhost:4000/til/datetime/">
 
 
-  <meta property="og:description" content="Django Custom Command를 만들고 사용해보자!">
-
-
-
+  <meta property="og:description" content="Django DateTimeField에 대해 알아보자">
 
 
 
 
-  <meta property="article:published_time" content="2021-11-11T00:00:00+09:00">
+
+
+
+  <meta property="article:published_time" content="2021-08-22T00:00:00+09:00">
 
 
 
@@ -47,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/til/custom-command/">
+<link rel="canonical" href="http://localhost:4000/til/datetime/">
 
 
 
@@ -300,16 +300,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[Django] Django Custom Command">
-    <meta itemprop="description" content="Django Custom Command를 만들고 사용해보자!">
-    <meta itemprop="datePublished" content="2021-11-11T00:00:00+09:00">
+    <meta itemprop="headline" content="[Django] DateTimeField">
+    <meta itemprop="description" content="Django DateTimeField에 대해 알아보자">
+    <meta itemprop="datePublished" content="2021-08-22T00:00:00+09:00">
     <meta itemprop="dateModified" content="2021-11-13T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/til/custom-command/" class="u-url" itemprop="url">[Django] Django Custom Command
+            <a href="http://localhost:4000/til/datetime/" class="u-url" itemprop="url">[Django] DateTimeField
 </a>
           </h1>
           
@@ -326,7 +326,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 minute read
+          less than 1 minute read
         
       </span>
     
@@ -341,64 +341,119 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#custom-command-만들기">custom command 만들기</a></li></ul>
+              <ul class="toc__menu"><li><a href="#원하는-데이터만-뽑아오고-싶다">원하는 데이터만 뽑아오고 싶다!</a><ul><li><a href="#날짜만-출력">날짜만 출력</a></li><li><a href="#시간만-출력">시간만 출력</a></li><li><a href="#해당-날짜의-요일-출력">해당 날짜의 요일 출력</a></li><li><a href="#월-일-시-분-초-마이크로초-개별-출력">월, 일, 시, 분, 초, 마이크로초 개별 출력</a></li></ul></li><li><a href="#원하는-형식으로-출력하고-싶다">원하는 형식으로 출력하고 싶다!</a><ul><li><a href="#strftime-method">strftime method</a></li></ul></li><li><a href="#datetime-module-사용">datetime module 사용</a></li></ul>
 
             </nav>
           </aside>
         
-        <p>Django Management Command는 <code class="language-plaintext highlighter-rouge">python manage.py shell</code>, <code class="language-plaintext highlighter-rouge">python manage.py migrate</code> 와 같이 우리가 장고를 사용할 때 자주 사용하는 명령어를 말한다. 우리는 이 Django Command를 Custom하여 원하는 동작을 원하는 명령어로 커스텀하여 만들어 줄 수 있다.</p>
-
-<h2 id="custom-command-만들기">custom command 만들기</h2>
-
-<p>원하는 app 폴더 밑에 management 폴더를 만들고 그 밑에 commands 폴더를 만든다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>앱이름/management/commands
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">23</span> <span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.000000</span>
 </code></pre></div></div>
 
-<p>이런 구조가 되어야 한다.</p>
+<ul>
+  <li>DateTimeField를 사용했을 때 위의 형식처럼 데이터가 들어가게 된다.</li>
+</ul>
 
-<p>폴더를 만들었으면 commands 폴더 밑에 원하는 명령어 이름으로 파일을 생성한다. 만약 <code class="language-plaintext highlighter-rouge">python manage.py insert_data_to_db</code> 라는 커스텀 command를 만들고 싶으면 <code class="language-plaintext highlighter-rouge">insert_data_to_db.py</code>라는 파일을 만들면 된다.</p>
+<h2 id="원하는-데이터만-뽑아오고-싶다">원하는 데이터만 뽑아오고 싶다!</h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 앱이름/management/commands/insert_data_to_db.py
-</span><span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
-<span class="kn">from</span> <span class="nn">apps.company_info.models</span> <span class="kn">import</span> <span class="n">CompanyName</span>
-
-<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
-    <span class="n">help</span> <span class="o">=</span> <span class="s">'insert data to company_names table'</span>
-
-    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'name'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'c_id_id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'language_id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-        <span class="n">c_id</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'c_id_id'</span><span class="p">]</span>
-        <span class="n">language_id</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'language_id'</span><span class="p">]</span>
-        <span class="n">company_name</span> <span class="o">=</span> <span class="n">CompanyName</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">c_id</span><span class="o">=</span><span class="n">c_id</span><span class="p">,</span> <span class="n">language_id</span><span class="o">=</span><span class="n">language_id</span><span class="p">)</span>
-        <span class="n">company_name</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Successfully make company name "%s"'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>클래스 이름은 Command로 만들어주고 BaseCommand를 받아온다. 밑 help 변수에는 만들 command의 용도를 설명하면 된다. (이름은 꼭 Command여야 한다.)</p>
+<ul>
+  <li>DateTimeField를 가지고 있는 객체의 필드를 가져오면 이런 형식으로 출력된다</li>
+</ul>
 
-<p>add_arguments 함수에 parser을 받아 함수 아래 <code class="language-plaintext highlighter-rouge">parser.add_argument(받을 인수, 타입)</code> 을 적는다.</p>
+<h3 id="날짜만-출력">날짜만 출력</h3>
 
-<p>handle이라는 함수에 add_arguments에서 받은 인수를 변수에 넣어준다. 나는 name과 c_id(회사 id), language_id를 받았다.
-받은 인수를 model에 저장하고 save 해준다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python manage.py insert_data_to_db 이름 회사id 언어id
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">date</span><span class="p">()</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>를 manage.py가 있는 경로에서 실행하면</p>
+<ul>
+  <li>date()를 이용하여 날짜만 뽑아올 수 있다.</li>
+</ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Successfully make company name 이름
+<h3 id="시간만-출력">시간만 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>data가 db에 잘 들어간 것을 확인할 수 있다.</p>
+<ul>
+  <li>time()을 이용하여 시간도 출력이 가능하다.</li>
+</ul>
 
-<p>참 신기하다! ㅎㅎ</p>
+<h3 id="해당-날짜의-요일-출력">해당 날짜의 요일 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">()</span>
+<span class="mi">5</span>
+</code></pre></div></div>
+
+<ul>
+  <li>해당하는 날짜의 요일도 출력할 수 있다.</li>
+  <li>0:월, 1:화, 2:수, 3:목, 4:금, 5:토, 6:일</li>
+</ul>
+
+<h3 id="월-일-시-분-초-마이크로초-개별-출력">월, 일, 시, 분, 초, 마이크로초 개별 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#월
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">month</span>
+<span class="mi">11</span>
+<span class="c1">#일
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">day</span>
+<span class="mi">6</span>
+<span class="c1">#시
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">hour</span>
+<span class="mi">0</span>
+<span class="c1">#분
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">minute</span>
+<span class="mi">0</span>
+<span class="c1">#초
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">second</span>
+<span class="mi">0</span>
+<span class="c1">#마이크로초
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">microsecond</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<ul>
+  <li>datetime 은 다양한 속성을 가지고 있다.</li>
+  <li>이 속성으로 원하는 데이터만 뽑아올 수 있다.</li>
+</ul>
+
+<h2 id="원하는-형식으로-출력하고-싶다">원하는 형식으로 출력하고 싶다!</h2>
+
+<h3 id="strftime-method">strftime method</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y년 %m월 %d일"</span><span class="p">)</span>
+<span class="s">'2021년 11월 06일'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y-%m-%d"</span><span class="p">)</span>
+<span class="s">'2021-11-06'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%H시 %M분 %S초"</span><span class="p">)</span>
+<span class="s">'00시 00분 00초'</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>위처럼 strftime 메서드를 이용하여 원하는 형식으로 출력할 수 있다.</li>
+</ul>
+
+<h2 id="datetime-module-사용">datetime module 사용</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; from datetime import datetime
+&gt;&gt;&gt; datetime.now
+&lt;built-in method now of type object at 0x7fdd8ea0fc20&gt;
+&gt;&gt;&gt; datetime.now()
+datetime.datetime(2021, 8, 22, 7, 26, 36, 249828)
+</code></pre></div></div>
+
+<ul>
+  <li>datetime module을 import 해서 현재 datetime을 출력할 수 있다</li>
+</ul>
 
         
       </section>
@@ -451,22 +506,21 @@
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+Django+Custom+Command%20http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+DateTimeField%20http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdatetime%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdatetime%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdatetime%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
       <a href="/chat/develop/" class="pagination--pager" title="개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
-">Previous</a>
-    
-    
-      <a href="/til/docker/" class="pagination--pager" title="[Docker] Django + MySQL 환경 구성하기
 ">Next</a>
     
   </nav>
@@ -531,6 +585,46 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
+        <a href="/til/custom-command/" rel="permalink">[Django] Django Custom Command
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Django Custom Command를 만들고 사용해보자!
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
         <a href="/chat/develop/" rel="permalink">개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
 </a>
       
@@ -557,46 +651,6 @@
 
 
     <p class="archive__item-excerpt" itemprop="description">비전공자인 내가 개발에 입문한 계기와 과정
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/til/datetime/" rel="permalink">[Django] DateTimeField
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          less than 1 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Django DateTimeField에 대해 알아보자
 </p>
   </article>
 </div>

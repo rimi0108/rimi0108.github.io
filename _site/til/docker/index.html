@@ -1,0 +1,785 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Docker] Django + MySQL 환경 구성하기 - rimlog</title>
+<meta name="description" content="Docker를 이용하여 Django 서버를 띄워보자 (Feat. MySQL)">
+
+
+  <meta name="author" content="Rim">
+  
+  <meta property="article:author" content="Rim">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="rimlog">
+<meta property="og:title" content="[Docker] Django + MySQL 환경 구성하기">
+<meta property="og:url" content="http://localhost:4000/til/docker/">
+
+
+  <meta property="og:description" content="Docker를 이용하여 Django 서버를 띄워보자 (Feat. MySQL)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-11-13T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2021-11-13T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/til/docker/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Rim",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="rimlog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          rimlog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/">Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Rim</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Cool Backend Developer 😎</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Somewhere</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/rimi0108" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hyerimc858@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hyerimc858@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>   <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle menu</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂  <span style = " font-size:18px;">전체 글 수</style> <span style = " font-size:18px;">4</style> <span style = "font-size:18px;">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Today I Learned</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                        <li><a href="/categories/TIL" class="">TIL (3)</a></li>
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Chat</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Chat" class=""> 내 이야기 (1)</a></li>
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav> 
+</div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Docker] Django + MySQL 환경 구성하기">
+    <meta itemprop="description" content="Docker를 이용하여 Django 서버를 띄워보자 (Feat. MySQL)">
+    <meta itemprop="datePublished" content="2021-11-13T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2021-11-13T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/til/docker/" class="u-url" itemprop="url">[Docker] Django + MySQL 환경 구성하기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#django-프로젝트-폴더-구조">Django 프로젝트 폴더 구조</a></li><li><a href="#dockerfile">Dockerfile</a></li><li><a href="#docker-compose">Docker compose</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <blockquote>
+  <p>docker 설치완료를 가정하고 진행해보겠습니다. mac os 환경에서 진행되었습니다.</p>
+</blockquote>
+
+<p>Django 프로젝트를 만들어주고 프로젝트 폴더안에 <strong>Dockerfile</strong>과 <strong>docker-compose.yml</strong> 파일을 생성해줍니다.</p>
+
+<p>참고로, Docker-Compose로 도커 컨테이너를 자동 생성한 후, DockerFile로 생성한 컨테이너 안에 자동으로 세팅 작업까지 돌아갈 수 있도록 할 수 있습니다.</p>
+
+<h2 id="django-프로젝트-폴더-구조">Django 프로젝트 폴더 구조</h2>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── Dockerfile
+├── README.md
+├── __pycache__
+│   └── my_settings.cpython-38.pyc
+├── docker-compose.yml
+├── manage.py
+├── moneybook
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── my_settings.py
+└── requirements.txt
+</code></pre></div></div>
+
+<p>폴더 구조는 위와 같습니다. 참고로 moneybook은 자신의 프로젝트 폴더 이름입니다.</p>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Dockerfile
+FROM python:3.8
+ENV PYTHONUNBUFFERED 1
+RUN apt-get -y update
+RUN apt-get -y install vim
+
+RUN mkdir /srv/code
+ADD requirements.txt /srv/code/
+RUN python3 -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Adds our application code to the image
+COPY . /code
+WORKDIR /code
+
+EXPOSE 8000
+</code></pre></div></div>
+
+<p>Dockerfile은 이미지를 구축하기 위한 작업을 차례대로 기술한 것입니다. Dockerfile을 사용하면 파일 내에 작성되어 있는 순서대로 명령어가 실행되며 이미지를 구축해나갑니다.</p>
+
+<p>위에 작성된 Dockerfile의 명령어를 살펴봅시다.</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">FROM python:3.8</code>은 python 3.8을 베이스 이미지로 지정한다는 것입니다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ENV PYTHONUNVUFFERED 1</code>은 저도 잘 몰라서
+<a href="https://stackoverflow.com/questions/59812009/what-is-the-use-of-pythonunbuffered-in-docker-file">stackoverflow</a>를 찾아봤습니다. 링크 글에 따르면 <em>PYTONUNBUFFERED를 비어 있지 않은 값으로 설정하면 파이썬 출력이 먼저 버퍼링되지 않고 터미널(예: 컨테이너 로그)로 바로 전송되고 애플리케이션 출력(예: django 로그)을 실시간으로 볼 수 있다. 또한 파이썬 애플리케이션이 충돌하는 경우 부분 출력은 버퍼에 고정되지 않으며 기록되지 않습니다.</em> 라고 하네요 😊</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">RUN</code> 명령어는 베이스 이미지에 새로운 레이어를 추가해 커맨드를 실행하고, 결과를 빌드 이미지에 반영하는 명령어라고 합니다.</p>
+  </li>
+</ol>
+
+<p>4.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RUN mkdir /srv/code
+ADD requirements.txt /srv/code/
+RUN python3 -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+</code></pre></div></div>
+
+<p>위는 <code class="language-plaintext highlighter-rouge">/srv/code</code>라는 디렉토리를 생성하고 requirements.txt를 디렉토리에 넣은 후 설치하는 명령어입니다.</p>
+
+<p>5.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>COPY . /code
+WORKDIR /code
+</code></pre></div></div>
+
+<p>위는 로컬 코드를 이미지에 추가하는 명령어입니다.</p>
+
+<p>6.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EXPOSE 8000
+</code></pre></div></div>
+
+<p>위는 컨테이너에서 공개하는 포트 번호를 8000으로 지정하는 명령어입니다.</p>
+
+<h2 id="docker-compose">Docker compose</h2>
+
+<p>Dockerfile의 명령어를 살펴봤으니 Docker compose 파일을 살펴봅시다.</p>
+
+<p>Docker Compose는 여러 컨테이너와 이미지를 정리하고 쉽게 관리하기 위한 도구입니다. 이것을 사용하면 여러 컨테이너가 연계되어 움직이는 서비스를 쉽게 관리할 수 있습니다.</p>
+
+<p>Dokcer Compose에서는 라이프 사이클을 관리하는 컨테이너를 서비스라고합니다. 이 서비스에서 사용하는 컨테이너의 설정(환경 변수, 네트워크, 볼륨, 포트 포워딩 설정 등)은 Compose 파일이라는 YAML 파일(docker-compose.yml)에 기술하게 되어 있습니다.</p>
+
+<p>서비스에서 적용된 설정은 Compose 파일에 기술된 자원(컨테이너, 이미지, 볼륨, 네트워크)에만 적용되기 때문에 여러 환경을 관리할 때 안전하게 조작할 수 있으며, db 같은 추상적인 서비스 이름도 안전하게 사용할 수 있습니다. 따라서 하나의 컨테이너를 움직이더라고 docker 커맨드보다 쉽게 컨테이너를 관리할 수 있습니다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">// docker-compose.yml</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">db</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mysql:5.7</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">mysql</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --default-authentication-plugin=mysql_native_password</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">MYSQL_ROOT_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0000"</span>
+      <span class="na">MYSQL_DATABASE</span><span class="pi">:</span> <span class="s2">"</span><span class="s">django"</span>
+      <span class="na">MYSQL_USER</span><span class="pi">:</span> <span class="s2">"</span><span class="s">django"</span>
+      <span class="na">MYSQL_PASSWORD</span><span class="pi">:</span> <span class="s2">"</span><span class="s">django"</span>
+    <span class="na">healthcheck</span><span class="pi">:</span>
+            <span class="na">test</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">CMD"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">mysqladmin"</span> <span class="pi">,</span><span class="s2">"</span><span class="s">ping"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-h"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">localhost"</span><span class="pi">]</span>
+            <span class="na">timeout</span><span class="pi">:</span> <span class="s">20s</span>
+            <span class="na">retries</span><span class="pi">:</span> <span class="m">10</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">7001:3306"</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">DJANGO_SECRET_KEY=local</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">django</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">./</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;</span>
+      <span class="s">bash -c "./manage.py makemigrations &amp;&amp;</span>
+               <span class="s">./manage.py migrate &amp;&amp;</span>
+               <span class="s">./manage.py runserver 0.0.0.0:8000"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./:/code</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">8000:8000"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">db</span>
+
+</code></pre></div></div>
+
+<p>제가 작성한 mysql과 django 서버를 실행하기 위한 docker-compose 파일의 커맨드를 보겠습니다.</p>
+
+<ol>
+  <li>
+    <p>맨 위의 <code class="language-plaintext highlighter-rouge">version</code>은 docker-compose의 버전을 명시한 것입니다. 자신의 로컬에 깔려있는 버전을 잘 확인하여 작성하면 됩니다.</p>
+  </li>
+  <li>
+    <p>저는 db를 <code class="language-plaintext highlighter-rouge">mysql 5.7</code> 버전으로 사용하기 위해 이미지를 설정해주었습니다. 실행 시 같이 실행될 커맨드와 컨테이너 이름, mysql 환경 설정까지 함께 설정해 주었습니다.</p>
+  </li>
+  <li>
+    <p>서버 환경은 django를 사용하기 위해 command를 이용해 migrate와 runserver 명령어를실행하게 합니다.
+<code class="language-plaintext highlighter-rouge">depends_on</code> 을 사용하여 mysql 컨테이너에 의존하는 service임을 명시했습니다.</p>
+  </li>
+</ol>
+
+<p>Dockerfile, docker-compose.yml 파일을 작성한후</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up
+</code></pre></div></div>
+
+<p>위 명령어를 입력하면
+<img width="1054" alt="스크린샷 2021-11-14 오후 3 13 44" src="https://user-images.githubusercontent.com/73830753/141670549-4de87f4a-613d-468b-9372-98baa2dfae65.png" /></p>
+
+<p>정상적으로 컨테이너가 실행되는 것을 볼 수 있습니다.</p>
+
+<p><em>docker 띄우는데만 하루 꼬박걸렸다… 😢 너무 어려워서 차근차근 더 알아가야할 것 같다!</em></p>
+
+<참고> 도커 실전 가이드 (도서)
+</참고>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#django" class="page__taxonomy-item p-category" rel="tag">Django</a><span class="sep">, </span>
+    
+      <a href="/tags/#docker" class="page__taxonomy-item p-category" rel="tag">Docker</a><span class="sep">, </span>
+    
+      <a href="/tags/#mysql" class="page__taxonomy-item p-category" rel="tag">MySQL</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-11-13">November 13, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BDocker%5D+Django+%2B+MySQL+%ED%99%98%EA%B2%BD+%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdocker%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdocker%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fdocker%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/custom-command/" class="pagination--pager" title="[Django] Django Custom Command
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/custom-command/" rel="permalink">[Django] Django Custom Command
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Django Custom Command를 만들고 사용해보자!
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/chat/develop/" rel="permalink">개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">비전공자인 내가 개발에 입문한 계기와 과정
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/datetime/" rel="permalink">[Django] DateTimeField
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Django DateTimeField에 대해 알아보자
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Rim. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

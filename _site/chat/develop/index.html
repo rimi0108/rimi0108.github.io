@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[Django] Django Custom Command - rimlog</title>
-<meta name="description" content="Django Custom Command를 만들고 사용해보자!">
+<!-- begin _includes/seo.html --><title>개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️ - rimlog</title>
+<meta name="description" content="비전공자인 내가 개발에 입문한 계기와 과정">
 
 
   <meta name="author" content="Rim">
@@ -22,19 +22,19 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="rimlog">
-<meta property="og:title" content="[Django] Django Custom Command">
-<meta property="og:url" content="http://localhost:4000/til/custom-command/">
+<meta property="og:title" content="개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️">
+<meta property="og:url" content="http://localhost:4000/chat/develop/">
 
 
-  <meta property="og:description" content="Django Custom Command를 만들고 사용해보자!">
-
-
-
+  <meta property="og:description" content="비전공자인 내가 개발에 입문한 계기와 과정">
 
 
 
 
-  <meta property="article:published_time" content="2021-11-11T00:00:00+09:00">
+
+
+
+  <meta property="article:published_time" content="2021-10-08T00:00:00+09:00">
 
 
 
@@ -47,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/til/custom-command/">
+<link rel="canonical" href="http://localhost:4000/chat/develop/">
 
 
 
@@ -300,16 +300,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[Django] Django Custom Command">
-    <meta itemprop="description" content="Django Custom Command를 만들고 사용해보자!">
-    <meta itemprop="datePublished" content="2021-11-11T00:00:00+09:00">
+    <meta itemprop="headline" content="개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️">
+    <meta itemprop="description" content="비전공자인 내가 개발에 입문한 계기와 과정">
+    <meta itemprop="datePublished" content="2021-10-08T00:00:00+09:00">
     <meta itemprop="dateModified" content="2021-11-13T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/til/custom-command/" class="u-url" itemprop="url">[Django] Django Custom Command
+            <a href="http://localhost:4000/chat/develop/" class="u-url" itemprop="url">개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
 </a>
           </h1>
           
@@ -326,7 +326,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 minute read
+          2 minute read
         
       </span>
     
@@ -341,64 +341,43 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#custom-command-만들기">custom command 만들기</a></li></ul>
+              <ul class="toc__menu"><li><a href="#개발자에-입문한-계기-️">개발자에 입문한 계기 🚶‍♀️</a></li><li><a href="#개발을-직업으로-삼기로-결정하다">개발을 직업으로 삼기로 결정하다</a></li><li><a href="#부트캠프를-통한-프로젝트-진행-">부트캠프를 통한 프로젝트 진행 👨‍👩‍👧‍👦</a><ul><li><a href="#팀원들과-진행한-프로젝트에서-얻은-것">팀원들과 진행한 프로젝트에서 얻은 것</a></li></ul></li><li><a href="#내가-개발을-사랑하는-이유-">내가 개발을 사랑하는 이유 🥰</a></li><li><a href="#나는-5년뒤-어떤-개발자가-되고-싶은가">나는 5년뒤 어떤 개발자가 되고 싶은가</a><ul><li><a href="#목표로-차근차근">목표로 차근차근</a></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <p>Django Management Command는 <code class="language-plaintext highlighter-rouge">python manage.py shell</code>, <code class="language-plaintext highlighter-rouge">python manage.py migrate</code> 와 같이 우리가 장고를 사용할 때 자주 사용하는 명령어를 말한다. 우리는 이 Django Command를 Custom하여 원하는 동작을 원하는 명령어로 커스텀하여 만들어 줄 수 있다.</p>
+        <h2 id="개발자에-입문한-계기-️">개발자에 입문한 계기 🚶‍♀️</h2>
 
-<h2 id="custom-command-만들기">custom command 만들기</h2>
+<p>나는 태생부터 무언가에 몰입하기를 좋아했다. 고등학교 시절에는 책읽기, 대학교 시절에는 피아노에 몰두했었다. 대학교를 졸업하고도 무언가에 몰두할 것이 필요했었는데, 그게 바로 개발 공부였다. 우연히 알게된 개발의 시작은 퇴근하고 취미삼아 HTML, CSS으로 웹사이트를 만드는 것이었다.
+<img src="https://images.velog.io/images/rimi0108/post/40662765-ffe1-4b0e-bd20-2961b7de00be/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-10-08%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.32.01.png" alt="" /></p>
 
-<p>원하는 app 폴더 밑에 management 폴더를 만들고 그 밑에 commands 폴더를 만든다.</p>
+<p>생활코딩을 보며 서툴게나마 만들어 본 나의 첫번째 웹 사이트다. 지금보면 정말 허접하고 별 거 없지만 그때는 내가 작성한 코드가 화면에 뜬다는 것이 참 신기하고 뿌듯했었다. 그렇게 구글 사이트 클론 코딩도 혼자 해보고, 친구 생일 축하용 사이트도 혼자 만들어보며 개발의 즐거움을 알아갔던 것 같다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>앱이름/management/commands
-</code></pre></div></div>
+<h2 id="개발을-직업으로-삼기로-결정하다">개발을 직업으로 삼기로 결정하다</h2>
 
-<p>이런 구조가 되어야 한다.</p>
+<p>그렇게 혼자 취미로 개발을 하다보니 더 많은 사람들과 함께 개발을 하고 싶다는 욕심이 생겼다. 그렇게 자연스럽게 회사에 들어가 개발팀에 속해 프로젝트를 진행하고 싶은 꿈이 생겼다.</p>
 
-<p>폴더를 만들었으면 commands 폴더 밑에 원하는 명령어 이름으로 파일을 생성한다. 만약 <code class="language-plaintext highlighter-rouge">python manage.py insert_data_to_db</code> 라는 커스텀 command를 만들고 싶으면 <code class="language-plaintext highlighter-rouge">insert_data_to_db.py</code>라는 파일을 만들면 된다.</p>
+<h2 id="부트캠프를-통한-프로젝트-진행-">부트캠프를 통한 프로젝트 진행 👨‍👩‍👧‍👦</h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 앱이름/management/commands/insert_data_to_db.py
-</span><span class="kn">from</span> <span class="nn">django.core.management.base</span> <span class="kn">import</span> <span class="n">BaseCommand</span>
-<span class="kn">from</span> <span class="nn">apps.company_info.models</span> <span class="kn">import</span> <span class="n">CompanyName</span>
+<p>같이 프로젝트를 진행할 사람을 찾기는 쉽지 않았다. 어떻게 프로젝트에 뛰어들 수 있을까 고민해보다가 학원에 등록하여 수강생들과 같이 프로젝트를 진행하면 되겠다라는 생각이 들었다. 국비학원과 부트캠프 중 하나를 고민하다 좀 더 체계적인 부트캠프에 등록하자 싶어서 부트캠프에 등록하게 되었다.</p>
 
-<span class="k">class</span> <span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
-    <span class="n">help</span> <span class="o">=</span> <span class="s">'insert data to company_names table'</span>
+<h3 id="팀원들과-진행한-프로젝트에서-얻은-것">팀원들과 진행한 프로젝트에서 얻은 것</h3>
 
-    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'name'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'c_id_id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'language_id'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<p>총 두 번의 프로젝트와 한 번의 인턴십을 경험했다. 혼자 개발하는 것과 팀원들과 개발하는 것의 가장 큰 차이점이라고 하면 바로 의사소통이었다. 혼자 개발할 때는 나 혼자 알아보면 되었던 코드를 좀 더 알아보기 쉽도록 가다듬어야 했고, 백엔드와 백엔드의 의사소통은 물론 백엔드와 프론트엔드의 의사소통이 어긋나면 프로젝트 진행 또한 어긋나 버리는 것을 느꼈다.
+가장 크게 느꼈던 것은 프로젝트의 <strong>투명성</strong>의 중요성이었다. 나 혼자의 힘으로 벅찬 기능을 팀원에게 공유하지 않고 혼자 끙끙 붙잡고 있으면 나 뿐만이 아니라 팀원 전체의 진행상황이 더뎌진다는 것을 깨달았다. 그래서 내 지금 상황을 팀원들에게 투명하게 공개하고, 적절한 도움과 피드백을 받으며 진행하는 것이 좋은 프로젝트의 진행 방법이라는 것을 느꼈다. 그래서 하루 한 번 진행 상황을 공유하는 scrum 방식의 유용성도 깨달았다.</p>
 
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
-        <span class="n">c_id</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'c_id_id'</span><span class="p">]</span>
-        <span class="n">language_id</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s">'language_id'</span><span class="p">]</span>
-        <span class="n">company_name</span> <span class="o">=</span> <span class="n">CompanyName</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">c_id</span><span class="o">=</span><span class="n">c_id</span><span class="p">,</span> <span class="n">language_id</span><span class="o">=</span><span class="n">language_id</span><span class="p">)</span>
-        <span class="n">company_name</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+<h2 id="내가-개발을-사랑하는-이유-">내가 개발을 사랑하는 이유 🥰</h2>
 
-        <span class="bp">self</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Successfully make company name "%s"'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
-</code></pre></div></div>
+<p>모든 직업이 다 힘들다. 또한 개발자도 힘들다. 개발자들을 거북목 🐢 으로 만들고 머리를 터지게 만드는 🤯 개발이지만 내가 개발을 사랑하는 이유는 나에게 충분히 몰입할 수 있는 시간을 가지게 해주며 잘 안 풀릴 때는 ‘난 왜 이렇게 멍청한가…’ 라는 생각과 함께 머리를 쥐어뜯게 되지만 해결할 때는 그 무엇도 비교할 수 없는 <strong>짜릿함과 달콤함</strong>을 선사해주기 때문이다.<br />
+또한 팀원들과 함께 만들어 낸 프로젝트의 결과물을 보면, 결코 한 사람이였다면 만들어낼 수 없었을 거라는 생각이 든다. 그렇게 개발은 나와 다른 <strong>타인의 소중함과 타인에 대한 존중</strong>도 새삼 깨닫게 해준다.</p>
 
-<p>클래스 이름은 Command로 만들어주고 BaseCommand를 받아온다. 밑 help 변수에는 만들 command의 용도를 설명하면 된다. (이름은 꼭 Command여야 한다.)</p>
+<h2 id="나는-5년뒤-어떤-개발자가-되고-싶은가">나는 5년뒤 어떤 개발자가 되고 싶은가</h2>
 
-<p>add_arguments 함수에 parser을 받아 함수 아래 <code class="language-plaintext highlighter-rouge">parser.add_argument(받을 인수, 타입)</code> 을 적는다.</p>
+<p>5년차 개발자가 된 나는 어떤 모습일까? 나는 팀원들이 모두 같이 일하고 싶어 하는 개발자가 되고 싶다. 또한 팀원들이 ‘혜림님께 물어보고 같이 해결하면 해결이 너무 잘 돼!’ 라고 하는 개발자가 되고 싶다. 그런 개발자가 되기 위해 의사소통 능력도 더욱 키우고, 내 개발 실력도 높이기 위해 열심히 정진해야겠다.</p>
 
-<p>handle이라는 함수에 add_arguments에서 받은 인수를 변수에 넣어준다. 나는 name과 c_id(회사 id), language_id를 받았다.
-받은 인수를 model에 저장하고 save 해준다.</p>
+<h3 id="목표로-차근차근">목표로 차근차근</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python manage.py insert_data_to_db 이름 회사id 언어id
-</code></pre></div></div>
-
-<p>를 manage.py가 있는 경로에서 실행하면</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Successfully make company name 이름
-</code></pre></div></div>
-
-<p>data가 db에 잘 들어간 것을 확인할 수 있다.</p>
-
-<p>참 신기하다! ㅎㅎ</p>
+<p>이번년도 첫번째 목표는 <em>부트캠프 수료하기</em>였다. 그 첫번째 목표를 이뤘고 많은 것을 얻고 성장한 것 같다. 다음 목표는 <em>개발자로 커리어 전환하기</em>이다. 이 두가지 목표를 모두 이룬다면 설정한 2021의 목표는 모두 이룬 것이라고 할 수 있겠다. 좀 더 큰 그림을 그린다면, 위에서 언급한 이상적인 개발자가 되기 위해 부지런히 걸어가야겠다.</p>
 
         
       </section>
@@ -415,9 +394,7 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#django" class="page__taxonomy-item p-category" rel="tag">Django</a><span class="sep">, </span>
-    
-      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a>
+      <a href="/tags/#developer" class="page__taxonomy-item p-category" rel="tag">Developer</a>
     
     </span>
   </p>
@@ -434,7 +411,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+      <a href="/categories/#chat" class="page__taxonomy-item p-category" rel="tag">Chat</a>
     
     </span>
   </p>
@@ -451,22 +428,22 @@
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+Django+Custom+Command%20http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%EA%B0%9C%EB%B0%9C%EC%9D%98+%EA%B0%9C%EC%9E%90%EB%8F%84+%EB%AA%B0%EB%9E%90%EB%8D%98+%EB%B9%84%EC%A0%84%EA%B3%B5%EC%9E%90%EA%B0%80+%EA%B0%9C%EB%B0%9C%EC%97%90+%EC%9E%85%EB%AC%B8%ED%95%9C+%EA%B3%BC%EC%A0%95+%F0%9F%92%81%E2%80%8D%E2%99%80%EF%B8%8F%20http%3A%2F%2Flocalhost%3A4000%2Fchat%2Fdevelop%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fchat%2Fdevelop%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Ftil%2Fcustom-command%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fchat%2Fdevelop%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/chat/develop/" class="pagination--pager" title="개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
+      <a href="/til/datetime/" class="pagination--pager" title="[Django] DateTimeField
 ">Previous</a>
     
     
-      <a href="/til/docker/" class="pagination--pager" title="[Docker] Django + MySQL 환경 구성하기
+      <a href="/til/custom-command/" class="pagination--pager" title="[Django] Django Custom Command
 ">Next</a>
     
   </nav>
@@ -531,7 +508,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/chat/develop/" rel="permalink">개발의 개자도 몰랐던 비전공자가 개발에 입문한 과정 💁‍♀️
+        <a href="/til/custom-command/" rel="permalink">[Django] Django Custom Command
 </a>
       
     </h2>
@@ -549,14 +526,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          2 minute read
+          1 minute read
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">비전공자인 내가 개발에 입문한 계기와 과정
+    <p class="archive__item-excerpt" itemprop="description">Django Custom Command를 만들고 사용해보자!
 </p>
   </article>
 </div>
