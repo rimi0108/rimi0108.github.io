@@ -1,0 +1,108 @@
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">23</span> <span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">00.000000</span>
+</code></pre></div></div>
+
+<ul>
+  <li>DateTimeField를 사용했을 때 위의 형식처럼 데이터가 들어가게 된다.</li>
+</ul>
+
+<h2 id="원하는-데이터만-뽑아오고-싶다">원하는 데이터만 뽑아오고 싶다!</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">UTC</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>DateTimeField를 가지고 있는 객체의 필드를 가져오면 이런 형식으로 출력된다</li>
+</ul>
+
+<h3 id="날짜만-출력">날짜만 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">date</span><span class="p">()</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>date()를 이용하여 날짜만 뽑아올 수 있다.</li>
+</ul>
+
+<h3 id="시간만-출력">시간만 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">datetime</span><span class="p">.</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>time()을 이용하여 시간도 출력이 가능하다.</li>
+</ul>
+
+<h3 id="해당-날짜의-요일-출력">해당 날짜의 요일 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">weekday</span><span class="p">()</span>
+<span class="mi">5</span>
+</code></pre></div></div>
+
+<ul>
+  <li>해당하는 날짜의 요일도 출력할 수 있다.</li>
+  <li>0:월, 1:화, 2:수, 3:목, 4:금, 5:토, 6:일</li>
+</ul>
+
+<h3 id="월-일-시-분-초-마이크로초-개별-출력">월, 일, 시, 분, 초, 마이크로초 개별 출력</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#월
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">month</span>
+<span class="mi">11</span>
+<span class="c1">#일
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">day</span>
+<span class="mi">6</span>
+<span class="c1">#시
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">hour</span>
+<span class="mi">0</span>
+<span class="c1">#분
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">minute</span>
+<span class="mi">0</span>
+<span class="c1">#초
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">second</span>
+<span class="mi">0</span>
+<span class="c1">#마이크로초
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">microsecond</span>
+<span class="mi">0</span>
+</code></pre></div></div>
+
+<ul>
+  <li>datetime 은 다양한 속성을 가지고 있다.</li>
+  <li>이 속성으로 원하는 데이터만 뽑아올 수 있다.</li>
+</ul>
+
+<h2 id="원하는-형식으로-출력하고-싶다">원하는 형식으로 출력하고 싶다!</h2>
+
+<h3 id="strftime-method">strftime method</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y년 %m월 %d일"</span><span class="p">)</span>
+<span class="s">'2021년 11월 06일'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y-%m-%d"</span><span class="p">)</span>
+<span class="s">'2021-11-06'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">project</span><span class="p">.</span><span class="n">end_date</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%H시 %M분 %S초"</span><span class="p">)</span>
+<span class="s">'00시 00분 00초'</span>
+
+</code></pre></div></div>
+
+<ul>
+  <li>위처럼 strftime 메서드를 이용하여 원하는 형식으로 출력할 수 있다.</li>
+</ul>
+
+<h2 id="datetime-module-사용">datetime module 사용</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; from datetime import datetime
+&gt;&gt;&gt; datetime.now
+&lt;built-in method now of type object at 0x7fdd8ea0fc20&gt;
+&gt;&gt;&gt; datetime.now()
+datetime.datetime(2021, 8, 22, 7, 26, 36, 249828)
+</code></pre></div></div>
+
+<ul>
+  <li>datetime module을 import 해서 현재 datetime을 출력할 수 있다</li>
+</ul>
