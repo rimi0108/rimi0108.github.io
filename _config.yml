@@ -104,8 +104,8 @@ author:
   name: "Rim"
   avatar: # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio: "Cool Backend Developer 😎"
-  location: "Somewhere"
-  email: "hyerimc858@gmail.com"
+  location: 
+  email: 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
