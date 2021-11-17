@@ -65,13 +65,13 @@ https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6
 ```python
 class Token(models.Model):
     token = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "tokens"
 ```
 
-token을 저장할 db를 만들어준다. user를 foreignkey로 갖고 있게 한다.
+token을 저장할 db를 만들어준다. 한 user는 하나의 토큰만 가질 수 있으므로 `OneToOneField`로 user 필드를 구성하였다.
 
 ```python
 Token.objects.create(user_id=user.id, token=access_token)
