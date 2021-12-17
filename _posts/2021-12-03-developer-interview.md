@@ -3,7 +3,7 @@ title: "비전공자 백엔드 개발자가 면접에서 받은 질문들"
 excerpt: "비전공자로서 백엔드 개발자 포지션으로 지원했을 때 받았던 질문을 정리해보았습니다."
 
 categories:
-  - Chat
+  - Interview
 tags:
   - [면접, 비전공자, Django, Python]
 

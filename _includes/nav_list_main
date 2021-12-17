@@ -45,6 +45,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Interview" %}
+                        <li><a href="/categories/Interview" class=""> 면접 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
       </li>
   </ul>
 </nav>
