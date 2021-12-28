@@ -32,8 +32,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "FastAPI" %}
-                        <li><a href="/categories/FastAPI" class=""> FastAPI ({{category[1].size}})</a></li>
+                    {% if category[0] == "Go" %}
+                        <li><a href="/categories/Go" class=""> Go ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
