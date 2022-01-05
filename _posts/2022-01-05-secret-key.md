@@ -100,7 +100,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 ```
 
-`settings.py` 코드를 위와 같이 수정해준 후 `.env` 파일을 루트 폴더 밑에 만들어줍니다.
+✔ `settings.py` 코드를 위와 같이 수정해준 후 `.env` 파일을 루트 폴더 밑에 만들어줍니다.
 
 ```
 .
@@ -128,9 +128,9 @@ CACHE_URL=memcache://127.0.0.1:11211,127.0.0.1:11212,127.0.0.1:11213
 REDIS_URL=rediscache://127.0.0.1:6379/1?client_class=django_redis.client.DefaultClient&password=ungithubbed-secret
 ```
 
-만들어준 `.env` 파일에 위 코드를 넣어주고 SECRET_KEY 부분에 기존 `settings.py` 파일에 있던 SECRET_KEY를 넣어줍니다.
+✔ 만들어준 `.env` 파일에 위 코드를 넣어주고 SECRET_KEY 부분에 기존 `settings.py` 파일에 있던 SECRET_KEY를 넣어줍니다.
 
-마지막으로 git이 `.env` 파일을 추적하지 못하도록 `.gitignore` 파일을 생성해 `.env` 파일을 넣어줍니다.
+✔ 마지막으로 git이 `.env` 파일을 추적하지 못하도록 `.gitignore` 파일을 생성해 `.env` 파일을 넣어줍니다.
 
 ```python
 # .gitignore
