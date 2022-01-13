@@ -1,5 +1,5 @@
 ---
-title: "[Authenticaiton] CSRF Token이란?"
+title: "[Authentication] CSRF Token이란?"
 excerpt: "CSRF와 CSRF Token이란 무엇일까?"
 
 categories:
@@ -34,7 +34,7 @@ CSRF는 Cross-Site Request Forgery의 줄임말이다. 한국어로 번역하면
 
 ## CSRF Token
 
-이러한 CSRF 공격을 방지하기 위해 CSRF Token을 사용할 수 있다. CSRF Token은 랜덤한 수를 Session에 저장한다. 그리고 사용자가 요청을 보낼 때마다 생성한 랜덤한 수(토큰 값)를 포함시켜서 전송한다. 서버에서는 사용자의 요청을 받을 때마다 세션에 저장된 토큰 값과 요청과 함께 전달된 토큰 값이 같은 지 검사한다.
+이러한 CSRF 공격을 방지하기 위해 CSRF Token을 사용할 수 있다. CSRF Token은 랜덤한 수를 Session에 저장한다. 사용자 요청을 보낼 때마다 생성한 랜덤한 수(토큰 값)를 포함시켜서 전송한다. 서버에서는 사용자의 요청을 받을 때마다 세션에 저장된 토큰 값과 요청과 함께 전달된 토큰 값이 같은 지 검사한다.
 
 1. 💻 서버 : 사용자가 CSRF 공격에 노출되지 않을 수 있도록 세션에 CSRF Token을 이용해 랜덤한 숫자를 생성해서 저장해 놔야지. 사용자가 요청 보낼 때 세션에 저장된 토큰이랑 사용자가 요청이랑 같이 보낸 토큰이랑 같은 지 비교해서 공격 당하지 않도록 주의해야겠다.
 
