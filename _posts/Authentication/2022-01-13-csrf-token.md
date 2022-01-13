@@ -46,5 +46,5 @@ CSRF는 Cross-Site Request Forgery의 줄임말이다. 한국어로 번역하면
 
 <참고>
 
-- [https://ko.wikipedia.org/wiki/%EC%82%AC%EC%9D%B4%ED%8A%B8*%EA%B0%84*%EC%9A%94%EC%B2%AD\_%EC%9C%84%EC%A1%B0](https://ko.wikipedia.org/wiki/%EC%82%AC%EC%9D%B4%ED%8A%B8_%EA%B0%84_%EC%9A%94%EC%B2%AD_%EC%9C%84%EC%A1%B0)
-- [https://sj602.github.io/2018/07/14/what-is-CSRF/](https://sj602.github.io/2018/07/14/what-is-CSRF/)
+- https://ko.wikipedia.org/wiki/%EC%82%AC%EC%9D%B4%ED%8A%B8_%EA%B0%84_%EC%9A%94%EC%B2%AD_%EC%9C%84%EC%A1%B0
+- https://sj602.github.io/2018/07/14/what-is-CSRF/
