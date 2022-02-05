@@ -27,9 +27,8 @@ last_modified_at: 2022-02-05
 세상에 딱 두 개의 컴퓨터만 있다고 가정해 보자. 이 두 대의 컴퓨터는 유선 케이블이나 무선 네트워크 (wifi, bluetooth)를 통해 연결될 수 있다. 
 
 
-![image](https://user-images.githubusercontent.com/73830753/152638177-e186b9bf-80e1-4ce1-9dfe-7b87a3e1256a.png)
+![image](https://user-images.githubusercontent.com/73830753/152639150-44634a96-c3b6-4d96-ac84-572046a13e04.png)
 
-![image](https://user-images.githubusercontent.com/73830753/152638194-67760b7a-bd8f-4fe7-9c23-23ce45d54bc0.png)
 
 하지만 두 대의 컴퓨터로는 지금 우리가 사용하는 인터넷 통신망이 형성될 수 없다!
 
@@ -44,7 +43,6 @@ last_modified_at: 2022-02-05
 
 라우터라는 특수한 소형 컴퓨터를 사용한다면 복잡했던 그물망이 좀 더 간단해질 것이다. 
 
-![image](https://user-images.githubusercontent.com/73830753/152638336-0f6e67cb-647c-4614-ae1d-67fcbb73d89f.png)
 
 라우터는 서로 다른 네트워크 간 중계 역할을 해주는 장치이다. 라우터는 각 컴퓨터의 정보의 목적지를 올바르게 알고 도착하게 하는 역할을 한다. 이 라우터 덕분에 정보들은 복잡한 길을 거치지 않고 간단하게 목적지인 컴퓨터로 도달할 수 있다.
 
