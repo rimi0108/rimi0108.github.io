@@ -39,7 +39,7 @@ last_modified_at: 2022-02-05
 
 ### 라우터를 사용하여 복잡한 네트워크를 간단하게 할 수 있다!
 
-![image](https://user-images.githubusercontent.com/73830753/152638312-8b1a6f4f-bc64-4481-988c-e96a0cec825a.png)
+![image](https://user-images.githubusercontent.com/73830753/152639171-05eb7fc1-c1f1-425a-9b3c-ca27cfc2e9b4.png)
 
 라우터라는 특수한 소형 컴퓨터를 사용한다면 복잡했던 그물망이 좀 더 간단해질 것이다. 
 
