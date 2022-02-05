@@ -48,8 +48,6 @@ last_modified_at: 2022-02-05
 
 하지만 2 대의 컴퓨터와 마찬가지로 세상에는 10대의 컴퓨터만 존재하지 않는다 세계의 많은 사람들은 컴퓨터를 가지고 있고 서로 통신하고 있다. 어떻게 그것이 가능할까? 🤔
 
-![image](https://user-images.githubusercontent.com/73830753/152638336-0f6e67cb-647c-4614-ae1d-67fcbb73d89f.png)
-
 요 라우터도 역시 컴퓨터이기 때문에 라우터와 라우터 끼리의 연결이 가능하다. 한 개의 라우터로는 수 백, 수 천개의 컴퓨터의 연결이 불가능하겠지만 서로 연결된 많은 라우터가 있다면 그것이 가능해질 것이다. 
 
 ![image](https://user-images.githubusercontent.com/73830753/152638435-c9d7136c-e1de-499a-b1e2-fb4b7e034ff9.png)
