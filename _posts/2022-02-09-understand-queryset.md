@@ -179,7 +179,7 @@ Beatles Blog
 
 ---
 
-*<참고>*
+_<참고>_
 
 - [https://docs.djangoproject.com/en/4.0/topics/db/queries/#querysets-are-lazy](https://docs.djangoproject.com/en/4.0/topics/db/queries/#querysets-are-lazy)
 - [https://docs.djangoproject.com/en/4.0/ref/models/querysets/#when-querysets-are-evaluated](https://docs.djangoproject.com/en/4.0/ref/models/querysets/#when-querysets-are-evaluated)
