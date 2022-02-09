@@ -10,8 +10,8 @@ tags:
 toc: true
 toc_sticky: true
 
-date: 2022-02-29
-last_modified_at: 2022-02-29
+date: 2022-02-09
+last_modified_at: 2022-02-09
 ---
 
 ## 💤 QuerySet은 게으르다 (Lazy Loading)
