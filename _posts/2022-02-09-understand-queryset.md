@@ -96,10 +96,10 @@ QuerySet이 처음 평가될 때, 데이터베이스 쿼리가 발생한다. Dja
 
 ```python
 for blog in Blog.objects.all(): # 데이터베이스 쿼리
-    print(blog.name)
+  print(blog.name)
 
 for blog in Blog.objects.all(): # 데이터베이스 다시 쿼리
-    print(blog.tagline)
+  print(blog.tagline)
 ```
 
 위 코드는 두 개의 QuerySet이 평가된다.
