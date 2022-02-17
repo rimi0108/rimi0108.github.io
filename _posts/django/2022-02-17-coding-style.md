@@ -210,4 +210,4 @@ from django.db.models import *
 
 ### <참고 서적>
 
-- **Two Scoops of Django**
+- Two Scoops of Django
