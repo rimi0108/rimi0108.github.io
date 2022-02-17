@@ -68,7 +68,7 @@ from splits.models import BananaSplit
 ```
 
 > import 문에 위처럼 주석을 달 필요는 없다. 예제의 주석들은 예제를 설명하기 위한 것일 뿐이다.
-> 
+
 - **장고 프로젝트에서의 import 순서**
     1. 표준 라이브러리 import
     2. 코어 장고 import
