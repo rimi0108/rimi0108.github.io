@@ -130,7 +130,7 @@ class WaffleConeCreateView(FoodMixin, CreateView):
 from core.views import FoodMixin
 ```
 
-외부에서 임포트에서 현재 앱에서 이용할 때 사용한다.
+외부에서 임포트해서 현재 앱에서 이용할 때 사용한다.
 
 - 명시적 상대 import
 
