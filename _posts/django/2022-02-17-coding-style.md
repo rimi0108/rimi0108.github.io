@@ -108,8 +108,18 @@ class WaffleConeCreateView(FoodMixin, CreateView):
 
 ```python
 # cones/views.py
-from __future__ import absolute_import
-from django.views.generic import Creatㄹ
+from django.views.generic import CreateView
+
+# 'cones' 패키지 명시적 상대 임포트
+from .models import WaffleCone
+from .forms import WaffleConeForm
+
+# 'core' 패키지에서 절대 임포트
+from core.views import FoodMixin
+
+class WaffleConeCreateView(FoodMixin, CreateView):
+    model = WaffleCone
+    form_class = WaffleConeForm
 ```
 
 ### 임포트 타입과 용도
