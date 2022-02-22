@@ -2,6 +2,13 @@
    ARCHIVE
    ========================================================================== */
 
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .archive {
   margin-top: 1em;
   margin-bottom: 2em;
@@ -45,7 +52,7 @@
 
 .archive__item-title {
   margin-bottom: 0.25em;
-  font-family: $sans-serif-narrow;
+  font-family: 'NanumSquareRound';
   line-height: initial;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -102,7 +109,7 @@
   margin: 0 auto;
   padding: 2px 5px;
   color: #fff;
-  font-family: $caption-font-family;
+  font-family: 'NanumSquareRound';
   font-size: $type-size-8;
   background: #000;
   text-align: right;
