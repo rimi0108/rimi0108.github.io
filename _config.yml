@@ -16,7 +16,7 @@ minimal_mistakes_skin: "custom" # "air", "aqua", "contrast", "dark", "dirt", "ne
 
 # Site Settings
 locale: "en-US"
-title: "rimlog"
+title: "rimlog ˙ᵕ˙"
 title_separator: "-"
 subtitle: # site tagline that appears below site title in masthead
 name: "Rim"
@@ -101,7 +101,7 @@ analytics:
 
 # Site Author
 author:
-  name: "Rim ˙ᵕ˙"
+  name: "Rim"
   avatar: # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio: "Backend Developer"
   location:
