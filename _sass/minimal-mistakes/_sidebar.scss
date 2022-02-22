@@ -6,6 +6,13 @@
    Default
    ========================================================================== */
 
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .sidebar {
   @include clearfix();
   // @include breakpoint(max-width $large) {
@@ -51,12 +58,12 @@
   h5,
   h6 {
     margin-bottom: 0;
-    font-family: $sans-serif-narrow;
+    font-family: 'NanumSquareRound';
   }
 
   p,
   li {
-    font-family: $sans-serif;
+    font-family: 'NanumSquareRound';
     font-size: $type-size-6;
     line-height: 1.5;
   }
@@ -173,7 +180,7 @@
   }
 }
 .sidebar .author__name {
-  font-family: $sans-serif;
+  font-family: 'NanumSquareRound';
   font-size: $type-size-5;
 }
 
@@ -190,7 +197,7 @@
   position: relative;
   display: table-cell;
   vertical-align: middle;
-  font-family: $sans-serif;
+  font-family: 'NanumSquareRound';
   z-index: 20;
   cursor: pointer;
 

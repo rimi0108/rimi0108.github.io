@@ -2,6 +2,13 @@
    SINGLE PAGE/POST
    ========================================================================== */
 
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 #main {
   @include clearfix;
   margin-left: auto;
@@ -232,7 +239,7 @@ body {
   margin: 0 auto;
   padding: 2px 5px;
   color: #fff;
-  font-family: $caption-font-family;
+  font-family: 'NanumSquareRound';
   font-size: $type-size-7;
   background: #000;
   text-align: right;
@@ -286,7 +293,7 @@ body {
 .page__meta {
   margin-top: 2em;
   color: $muted-text-color;
-  font-family: $sans-serif;
+  font-family: 'NanumSquareRound';
   font-size: $type-size-6;
 
   p {
