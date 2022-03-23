@@ -98,7 +98,7 @@ Options:
 
 4. conf 폴더에 들어가면 여러 기본 설정 파일들이 있다. 이 파일들을 자신이 원하는 설정으로 변경해주면 된다.
 
-```reason
+```
 $ cd conf
 ```
 <img width="311" alt="스크린샷 2022-03-23 오후 3 58 09" src="https://user-images.githubusercontent.com/73830753/159692984-222430dd-75a9-4a30-a817-30e5d0ef81f7.png">
