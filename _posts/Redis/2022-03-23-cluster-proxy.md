@@ -257,7 +257,7 @@ ClusterServerPool {
 
 `cluster.conf` 파일에서는 주석 처리되어있던 Examples 밑 코드를 주석을 풀고 활성화 시키면 된다.
 
-```reason
+```
 Servers {
         + 127.0.0.1:6300
         + 127.0.0.1:6301
