@@ -34,7 +34,7 @@ $ git clone https://github.com/joyieldInc/predixy.git
 $ cd predixy
 ```
 
-1. make 명령어를 입력한다. 뭐가 밑에 막 뜰 것이다..
+2. make 명령어를 입력한다. 뭐가 밑에 막 뜰 것이다..
 
 ```
 $ make
@@ -80,7 +80,7 @@ c++ -std=c++11 -Wall -w -g -O3 -D_PREDIXY_BACKTRACE_ -D_KQUEUE_ -c main.cpp
 c++ -std=c++11 -Wall -w -g -O3 -D_PREDIXY_BACKTRACE_ -D_KQUEUE_ -o predixy Crc16.o HashFunc.o Timer.o Logger.o LogFileSink.o Alloc.o Socket.o ListenSocket.o AcceptSocket.o ConnectSocket.o KqueueMultiplexor.o Subscribe.o Connection.o AcceptConnection.o ConnectConnection.o Buffer.o Command.o Distribution.o Enums.o Reply.o ConfParser.o Conf.o Auth.o DC.o LatencyMonitor.o RequestParser.o Request.o ResponseParser.o Response.o Server.o ServerGroup.o ServerPool.o ClusterNodesParser.o ClusterServerPool.o StandaloneServerPool.o ConnectConnectionPool.o Handler.o Proxy.o main.o -static-libstdc++ -rdynamic -lpthread
 ```
 
-1. predixy 소스들을 `/usr/local/bin` 폴더로 복사해주고 `predixy -h` 명령어를 입력했을 때 설명 문구가 나오면 설치에 성공한 것이다.
+3. predixy 소스들을 `/usr/local/bin` 폴더로 복사해주고 `predixy -h` 명령어를 입력했을 때 설명 문구가 나오면 설치에 성공한 것이다.
 
 ```
 $ cp src/predixy /usr/local/bin
@@ -96,7 +96,7 @@ Options:
    --WorkerThreads=N  set worker threads
 ```
 
-2. conf 폴더에 들어가면 여러 기본 설정 파일들이 있다. 이 파일들을 자신이 원하는 설정으로 변경해주면 된다.
+4. conf 폴더에 들어가면 여러 기본 설정 파일들이 있다. 이 파일들을 자신이 원하는 설정으로 변경해주면 된다.
 
 ```reason
 $ cd conf
@@ -271,7 +271,7 @@ Servers {
 
 요 부분에 host 번호:port 번호는 자신이 띄운 redis cluster node들의 주소를 적으면 된다. 이 글에서는 redis cluster에 대한 설명은 따로 하지 않겠다. 참고로 앞의 `+` 기호는 지우면 안된다!
 
-3. predixy 실행
+5. predixy 실행
 
 ```
 $ predixy conf/predixy.conf
