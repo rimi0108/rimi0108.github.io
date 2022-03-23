@@ -29,14 +29,14 @@ Cluster Proxy를 사용하면 여러 개의 Cluster node들에 직접 접근하�
 
 1. predixy 레포를 clone 해와서 디렉토리 안으로 들어간다.
 
-```reason
+```
 $ git clone https://github.com/joyieldInc/predixy.git 
 $ cd predixy
 ```
 
 1. make 명령어를 입력한다. 뭐가 밑에 막 뜰 것이다..
 
-```reason
+```
 $ make
 c++ -std=c++11 -Wall -w -g -O3 -D_PREDIXY_BACKTRACE_ -D_KQUEUE_ -c Crc16.cpp 
 c++ -std=c++11 -Wall -w -g -O3 -D_PREDIXY_BACKTRACE_ -D_KQUEUE_ -c HashFunc.cpp 
@@ -82,7 +82,7 @@ c++ -std=c++11 -Wall -w -g -O3 -D_PREDIXY_BACKTRACE_ -D_KQUEUE_ -o predixy Crc16
 
 1. predixy 소스들을 `/usr/local/bin` 폴더로 복사해주고 `predixy -h` 명령어를 입력했을 때 설명 문구가 나오면 설치에 성공한 것이다.
 
-```reason
+```
 $ cp src/predixy /usr/local/bin
 $ predixy -h
 Usage: 
@@ -106,7 +106,7 @@ $ cd conf
 
 여기서 `predixy.conf` 파일과 `cluster.conf` 파일을 변경해보자!
 
-```reason
+```
 # predixy.conf
 
 ################################### GENERAL ####################################
@@ -212,7 +212,7 @@ Include latency.conf
 
 주석 처리 된 port를 활성화하고 `try.conf` 대신 `cluster.conf` 로 서버 설정을 바꾼다. 여기서 설정한 port 번호는 proxy에 접근할 수 있는 port 번호가 된다.
 
-```reason
+```
 # cluster.conf
 
 ## redis cluster server pool define
@@ -273,13 +273,13 @@ Servers {
 
 3. predixy 실행
 
-```reason
+```
 $ predixy conf/predixy.conf
 ```
 
 위 명령어를 입력하여 오류가 뜨지 않는다면 성공한 것이다! 만약 오류가 뜬다면 현재 경로를 잘 확인하자.
 
-```reason
+```
 $ redis-cli -p 7617
 127.0.0.1:7617> info
 # Proxy
