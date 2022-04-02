@@ -14,7 +14,7 @@ date: 2022-02-22
 last_modified_at: 2022-02-22
 ---
 
-## 🚀 HTTP Method란?
+## HTTP Method란?
 
 - HTTP는 request Method를 정의하여 주어진 resource에 수행하길 원하는 행동을 나타낸다.
     
