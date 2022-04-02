@@ -1,0 +1,4 @@
+I"�<blockquote>
+  <p>우리가 django 프로젝트를 git으로 추적하고 github에 올릴 때 올려서는 안되는 정보가 있습니다. 바로 SECRET_KEY 입니다.</p>
+</blockquote>
+:ET

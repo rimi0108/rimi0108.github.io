@@ -1,0 +1,57 @@
+I"U
+<h1 id="django에서의-mvc-패턴이란">Django에서의 MVC 패턴이란?</h1>
+
+<p><strong>M</strong>odel, <strong>V</strong>iew, <strong>C</strong>ontroller 의 약자이다.</p>
+
+<ul>
+  <li>Model, View, Controller가 각자의 부분에 있어서 역할을 하며 전체적인 프레임워크를 구축하는 패턴이다.</li>
+  <li>장고에 있어서 가장 중요한 개발 패턴이다.</li>
+  <li>애플에서 만들었던 개발 패턴의 한 방식이다.</li>
+</ul>
+
+<p>하지만 Django를 정확하게 보면 Controller가 Template으로 바뀌어있다. 개발 패턴은 비슷한데 명칭은 다르다고 보면된다.</p>
+
+<h2 id="model">Model</h2>
+
+<ul>
+  <li>장고에서 데이터베이스와 통신을 하게 해주는 도구 같은 것이다.</li>
+  <li>객체를 데이터 베이스에 저장하는 것을 편리하게 해주는 것이 Django Model이다.</li>
+  <li>데이터베이스 언어를 사용하지 않고도 간편하게 데이터베이스의 내용을 수정하거나 삭제할 수 있다.</li>
+</ul>
+
+<p>ex) 한 유저가 새로 사이트에 가입을 하여 계정이 생겼다. 유저는 이 계정으로 새로운 게시글을 썼다. 그렇다면 그 게시글도 하나의 객체가 될 수 있다. 그 객체를 우리는 데이터 베이스에 저장을 해야 한다. Django Model은 이 객체를 데이터 베이스에 저장하는 과정을 편리하게 해주는 것이다.</p>
+
+<h2 id="view">View</h2>
+
+<ul>
+  <li>장고에서 계산하는 부분의 대부분을 담당한다.</li>
+</ul>
+
+<ol>
+  <li>유저가 웹 서비스에 요청(Request)을 한다.</li>
+  <li>요청을 받은 서버는 요청에 대한 응답(Response)을 하기 위한 과정을 거치게 된다. (Check if authenticated, Check request valid, Collect data from DB, Render Response)</li>
+</ol>
+
+<p>서버에서 위의 작업을 해주는 부분이 View라고 보면 된다.</p>
+
+<h2 id="template">Template</h2>
+
+<ul>
+  <li>실질적으로 안에 구성되어 있는 것은 JS, HTML, CSS와 같은 눈에 보이는 프론트엔드의 부분과 밀접하게 관련되어 있다.</li>
+  <li>유저는 개발자가 만든 UI를 본다.
+    <ul>
+      <li>이 UI를 어떻게 생성할 것인가의 해결책을 주는 방법이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="template---view---model">Template - View - Model</h2>
+
+<p>Template (유저가 보는 인터페이스와 밀접) &lt;-&gt; View (인증, 계산 및 확인) &lt;-&gt; Model(데이터베이스에 접근)</p>
+
+<h3><참고></참고></h3>
+
+<ul>
+  <li>https://www.youtube.com/watch?v=0J8Vd79ySKw&amp;list=PLQFurmxCuZ2RVfilzQB5rCGWuODBf4Qjo&amp;index=4</li>
+</ul>
+:ET

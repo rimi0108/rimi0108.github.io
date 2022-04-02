@@ -1,0 +1,105 @@
+I"�%<p><a href="https://rimi0108.github.io/django/drf1/">[Django] DRF로 회원가입 기능 구현하기 - (1)</a></p>
+
+<p>위 글에서 유저 회원가입 기능 구현까지 완료해보았다. 그런데 문제가 하나 남았다. 바로 db에 유저의 비밀번호가 그대로 들어간다는 것이다.</p>
+
+<p>유저의 비밀번호는 절대 비밀번호 그대로 db에 저장하지 않는다. db가 해킹을 당하면 유저의 비밀번호도 그대로 노출되며 외부 해킹이 아니더라도 내부 개발자나 인력이 유저들의 비밀번호를 볼 위험이 있기 때문이다.</p>
+
+<p>자 이제, drf로 비밀번호 암호화를 적용해보자.</p>
+
+<h2 id="hash-password">hash password</h2>
+
+<h3 id="방법1-실패">방법1 (실패)</h3>
+
+<p>비밀번호 암호에는 단방향 해시 함수가 일반적으로 쓰인다. drf를 적용하지 않았을 때 나는 bcrypt를 이용하여 비밀번호 암호화를 했다. drf에는 bcrypt를 어떻게 적용하는지 모르겠어서 일단 검색을 해봤다. (나의 구원자 스택오버플로우 🥺)</p>
+
+<p>https://stackoverflow.com/questions/61065339/how-do-i-hash-passwords-in-drf</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserSerializer</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">create</span><span class="p">(</span><span class="n">validated_data</span><span class="p">)</span>
+    <span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">validated_data</span><span class="p">[</span><span class="s">'password'</span><span class="p">])</span>
+    <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">user</span>
+</code></pre></div></div>
+
+<p>위 스택오버플로우 링크에 따라 위 코드를 <code class="language-plaintext highlighter-rouge">models.py</code>에 적용하고 서버를 실행하니 또 에러가 발생했다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ImportError: cannot import name 'User' from partially initialized module 'accounts.models' (most likely due to a circular import) (/code/accounts/models.py)</code></p>
+
+<p>또 머리를 싸매고 검색해보니 아마 import 한 파일들의 <strong>순환 의존성</strong> 때문에 생긴 에러 같았다. =&gt; <a href="https://gardeny.tistory.com/11">나를 구원해준 블로그 링크</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># models.py
+</span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">BaseUserManager</span><span class="p">,</span> <span class="n">AbstractBaseUser</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="kn">from</span> <span class="nn">accounts.serializers</span> <span class="kn">import</span> <span class="n">UserSerializer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># serializers.py
+</span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
+</code></pre></div></div>
+
+<p>위는 models에 import 한 모듈이고 밑은 serializers에 import 한 모듈이다.</p>
+
+<p>아마 models에서도 serializers를 의존하고 있고 serializers에서도 models를 의존하고 있어 생긴 문제 같았다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># serializers.py
+</span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">class</span> <span class="nc">UserSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="p">.</span><span class="n">HyperlinkedModelSerializer</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">"email"</span><span class="p">,</span> <span class="s">"password"</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># serializers.py
+</span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+
+
+<span class="k">class</span> <span class="nc">UserSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="p">.</span><span class="n">HyperlinkedModelSerializer</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="s">'accounts.User'</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">"email"</span><span class="p">,</span> <span class="s">"password"</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>위처럼 <code class="language-plaintext highlighter-rouge">models.py</code>에서 User를 불러와 의존적이었던 파일을 밑 코드와 같이 ‘accouts.User’ 과 같이 바꿔준다. 이와 같이 바꿔주면 해당 model을 필요 시에만 import 해오기 때문에 오류를 띄우지 않는다고 한다.</p>
+
+<p>그런데 http://127.0.0.1:8000/users/ 에 접속하니 <code class="language-plaintext highlighter-rouge">'str' object has no attribute '_meta'</code> 라는 에러가 발생했다. (멈추지 않는 에러..) 아마 Meta 클래스의 model에는 문자열이 들어가면 안되는 것 같다..😱</p>
+
+<p>위 스택오버플로우에서 찾은 코드는 serializer을 의존한 코드기 때문에 다른 방법을 찾아보기로 했다. 하하..</p>
+
+<h3 id="방법2-성공">방법2 (성공)</h3>
+
+<p>또 구글링으로 뒤지고 뒤지다..</p>
+
+<p>https://stackoverflow.com/questions/41332528/how-to-hash-django-user-password-in-django-rest-framework</p>
+
+<p>위 링크에 따라서 한번 <code class="language-plaintext highlighter-rouge">serializers.py</code>를 수정해보기로 했다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># serializers.py
+</span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth.hashers</span> <span class="kn">import</span> <span class="n">make_password</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">class</span> <span class="nc">UserSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="p">.</span><span class="n">HyperlinkedModelSerializer</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="n">validated_data</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">validated_data</span><span class="p">[</span><span class="s">'password'</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserSerializer</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">create</span><span class="p">(</span><span class="n">validated_data</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">"email"</span><span class="p">,</span> <span class="s">"password"</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>make_password는 password를 hash 해주는 모듈인 것 같다. 들어온 password data를 hash해준 후 return 해주는 코드 인듯하다. 어쨌든 이 코드를 적용해주었다.</p>
+
+<p>😭 서..성공했다. 비밀번호가 암호화되어 저장되었다. 갬동….</p>
+:ET

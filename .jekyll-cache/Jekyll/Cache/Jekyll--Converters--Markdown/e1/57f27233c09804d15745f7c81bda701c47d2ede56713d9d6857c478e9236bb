@@ -1,0 +1,283 @@
+I"1t<h2 id="회원가입-기능-구현해보기">회원가입 기능 구현해보기</h2>
+
+<blockquote>
+  <p>필자는 <a href="https://www.django-rest-framework.org/tutorial/quickstart/">drf 공식문서 tutorial</a> 을 통해서 기본적인 회원가입 기능을 구현해놓은 상태입니다.</p>
+</blockquote>
+
+<p><em>drf를 사용하지 않고 구현했던 회원가입 기능은 이제 좀 해봤다고 익숙해졌지만 drf를 적용하니 익숙했던 게 정말 어려워진다. 😰 하지만 drf와 친해지는 시간을 많이 가져야 할 것 같기 때문에 drf를 사용해서 기능을 구현해보기로 했다.</em></p>
+
+<p><img width="1207" alt="스크린샷 2021-11-14 오후 11 33 41" src="https://user-images.githubusercontent.com/73830753/141685621-d630b342-f218-468c-9400-3c1aa53a0ee3.png" /></p>
+
+<p>일단 위 공식문서 tutorial을 잘 따라하면 <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8000/users/</code>에 접속했을 때 user 정보를 post 할 수 있는 화면이 잘 뜬다.
+<img width="1212" alt="스크린샷 2021-11-14 오후 11 38 33" src="https://user-images.githubusercontent.com/73830753/141685831-3dfaf9fe-24e5-4e0c-b8e2-b80cb45540f7.png" />
+프로젝트와 연결된 db의 <code class="language-plaintext highlighter-rouge">auth_user</code> 테이블을 확인하면 user 정보가 잘 들어간 걸 확인 할 수 있다.</p>
+
+<p>그런데 하나의 user를 더 추가하려고 하니 <code class="language-plaintext highlighter-rouge">1062, "Duplicate entry "For key 'username'"</code> 이라는 에러가 발생했다. 아마 username이 unique한 필드로 설정되어 있는데 username을 serializer에 넣지 않으니 빈 문자열로 들어가서 username이 중복되어 발생한 문제같았다.</p>
+
+<p>이 문제를 해결하기 위해서 username의 <code class="language-plaintext highlighter-rouge">unique=True</code> 옵션을 변경해줘야 할 것 같다. 그리고 db에 password가 입력한 그대로 들어가서 보안을 위해 password를 암호화하여 db에 넣어주어야 할 것 같다. 이 문제들을 차근차근 해결해보자! 이번 글에서는 django 유저 기본 모델을 변경해주어 첫번째 문제를 해결해보겠다.</p>
+
+<h2 id="table-field-옵션-변경">table field 옵션 변경</h2>
+
+<p>찾아보니 django에서 기본적으로 제공되는 유저 모델은 로그인할 때 username으로 로그인해야된다고 한다.(그래서 unique=True 옵션을 줬나보다.) 그래서 커스텀 유저 모델을 만들기로 했다!</p>
+
+<h3 id="custom-user-model">Custom user model</h3>
+
+<h4 id="model-작성하기">model 작성하기</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># accounts/models.py
+</span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">BaseUserManager</span><span class="p">,</span> <span class="n">AbstractBaseUser</span>
+
+
+<span class="k">class</span> <span class="nc">UserManager</span><span class="p">(</span><span class="n">BaseUserManager</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"Users must have an email address"</span><span class="p">)</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="n">email</span><span class="p">))</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">_db</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">create_superuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">is_admin</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">_db</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AbstractBaseUser</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">EmailField</span><span class="p">(</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="s">"email"</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">is_active</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">is_admin</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">UserManager</span><span class="p">()</span>
+
+    <span class="n">USERNAME_FIELD</span> <span class="o">=</span> <span class="s">"email"</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">has_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">has_module_perms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_label</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">is_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_admin</span>
+</code></pre></div></div>
+
+<p>accounts 앱에 있는 <code class="language-plaintext highlighter-rouge">models.py</code> 파일에 위와 같이 코드를 작성해준다. 자세히 뜯어보자!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">BaseUserManager</span><span class="p">,</span> <span class="n">AbstractBaseUser</span>
+</code></pre></div></div>
+
+<p>커스텀 유저 모델을 만들기 위해서는 <code class="language-plaintext highlighter-rouge">BaseUserManager</code>와 <code class="language-plaintext highlighter-rouge">AbstractBaseUser</code>라는 두 개의 클래스가 필요하다고 한다. <code class="language-plaintext highlighter-rouge">BaseUserManager</code> 클래스는 유저를 생성하는 것을 돕는 클래스이며, 실제 모델은 <code class="language-plaintext highlighter-rouge">AbstractBaseUser</code>을 상속받아 생성되는 클래스이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserManager</span><span class="p">(</span><span class="n">BaseUserManager</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"Users must have an email address"</span><span class="p">)</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="n">email</span><span class="p">))</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">_db</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+    <span class="k">def</span> <span class="nf">create_superuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">is_admin</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">_db</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">BaseUserManager</code>를 상속받은 <code class="language-plaintext highlighter-rouge">UserManager</code> 클래스는 헬퍼 클래스이다. 이 클래스는 두 가지 함수를 가지고 있다. 함수의 email parameter는 원래 username이 들어가는데, 우리는 username 대신 email을 사용할 것이므로 email을 전달한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AbstractBaseUser</span><span class="p">):</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">EmailField</span><span class="p">(</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="s">"email"</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">is_active</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">is_admin</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">UserManager</span><span class="p">()</span>
+
+    <span class="n">USERNAME_FIELD</span> <span class="o">=</span> <span class="s">"email"</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">has_perm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">has_module_perms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_label</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">is_staff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">is_admin</span>
+</code></pre></div></div>
+
+<p>위는 User의 실제 모델이다. 이 모델은 email, is_active, is_admin 필드를 가지고 있다. is_active, is_admin 필드는 django의 유저 모델의 필수 필드이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    objects = UserManager()
+
+    USERNAME_FIELD = "email"
+</code></pre></div></div>
+<p>위는 User 모델을 생성하기 위해 꼭 필요한 부분이다. 우리가 만든 헬퍼 클래스를 사용하도록 설정하였으며, username 필드를 email로 사용하게 하였다.</p>
+
+<h4 id="관리자-페이지-수정">관리자 페이지 수정</h4>
+
+<p>django의 admin 페이지를 통해 user를 관리하기 위해 기존 django admin form을 커스텀한 유저 모델에 맞게 바꿔줘야 한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">forms.py</code> 라는 파일을 앱안에다 생성한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># accounts/forms.py
+</span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.forms</span> <span class="kn">import</span> <span class="n">ReadOnlyPasswordHashField</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+
+<span class="k">class</span> <span class="nc">UserCreationForm</span><span class="p">(</span><span class="n">forms</span><span class="p">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="n">password1</span> <span class="o">=</span> <span class="n">forms</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Password'</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="p">.</span><span class="n">PasswordInput</span><span class="p">)</span>
+    <span class="n">password2</span> <span class="o">=</span> <span class="n">forms</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">'Password confirmation'</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="p">.</span><span class="n">PasswordInput</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">clean_password2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">password1</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">cleaned_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"password1"</span><span class="p">)</span>
+        <span class="n">password2</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">cleaned_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"password2"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">password1</span> <span class="ow">and</span> <span class="n">password2</span> <span class="ow">and</span> <span class="n">password1</span> <span class="o">!=</span> <span class="n">password2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="p">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s">"Passwords don't match"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">password2</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="nb">super</span><span class="p">().</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">"password1"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">commit</span><span class="p">:</span>
+            <span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">user</span>
+
+
+<span class="k">class</span> <span class="nc">UserChangeForm</span><span class="p">(</span><span class="n">forms</span><span class="p">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">ReadOnlyPasswordHashField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'is_active'</span><span class="p">,</span> <span class="s">'is_admin'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">initial</span><span class="p">[</span><span class="s">"password"</span><span class="p">]</span>
+</code></pre></div></div>
+<p>위와 같이 코드를 작성한다.</p>
+
+<h4 id="admin-페이지에-form-적용">admin 페이지에 form 적용</h4>
+
+<p>작성한 form을 admin 페이지에 적용하기 위해 앱안의 <code class="language-plaintext highlighter-rouge">admin.py</code> 파일을 수정해준다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># accounts/admin.py
+</span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.admin</span> <span class="kn">import</span> <span class="n">UserAdmin</span> <span class="k">as</span> <span class="n">BaseUserAdmin</span>
+
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">UserChangeForm</span><span class="p">,</span> <span class="n">UserCreationForm</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+
+<span class="k">class</span> <span class="nc">UserAdmin</span><span class="p">(</span><span class="n">BaseUserAdmin</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">UserChangeForm</span>
+    <span class="n">add_form</span> <span class="o">=</span> <span class="n">UserCreationForm</span>
+
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,</span> <span class="s">'is_admin'</span><span class="p">)</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">(</span><span class="s">'is_admin'</span><span class="p">,)</span>
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">{</span><span class="s">'fields'</span><span class="p">:</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">)}),</span>
+        <span class="p">(</span><span class="s">'Permissions'</span><span class="p">,</span> <span class="p">{</span><span class="s">'fields'</span><span class="p">:</span> <span class="p">(</span><span class="s">'is_admin'</span><span class="p">,)}),</span>
+    <span class="p">)</span>
+
+    <span class="n">add_fieldsets</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s">'classes'</span><span class="p">:</span> <span class="p">(</span><span class="s">'wide'</span><span class="p">,),</span>
+            <span class="s">'fields'</span><span class="p">:</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,</span> <span class="s">'password1'</span><span class="p">,</span> <span class="s">'password2'</span><span class="p">)}</span>
+         <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,)</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s">'email'</span><span class="p">,)</span>
+    <span class="n">filter_horizontal</span> <span class="o">=</span> <span class="p">()</span>
+
+
+<span class="n">admin</span><span class="p">.</span><span class="n">site</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">UserAdmin</span><span class="p">)</span>
+<span class="n">admin</span><span class="p">.</span><span class="n">site</span><span class="p">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">Group</span><span class="p">)</span>
+</code></pre></div></div>
+<p>위와 같이 코드를 작성한다.</p>
+
+<h4 id="커스텀-유저-모델-등록">커스텀 유저 모델 등록</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 프로젝트폴더/settings.py
+</span><span class="n">AUTH_USER_MODEL</span> <span class="o">=</span> <span class="s">"accounts.User"</span>
+</code></pre></div></div>
+
+<p>자신의 프로젝트 폴더안에 있는 <code class="language-plaintext highlighter-rouge">settings.py</code> 파일에 위와 같은 코드를 추가한다. <code class="language-plaintext highlighter-rouge">"앱이름.User"</code>로 작성한다.</p>
+
+<h4 id="테이블-생성">테이블 생성</h4>
+
+<p>위 코드들을 다 작성하면 makemigrations과 migrate를 통해 db 테이블을 생성한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+------------------------+
+| Tables_in_django       |
++------------------------+
+| accounts_user          |
+| auth_group             |
+| auth_group_permissions |
+| auth_permission        |
+| django_admin_log       |
+| django_content_type    |
+| django_migrations      |
+| django_session         |
++------------------------+
+</code></pre></div></div>
+<p>테이블을 확인하면 위와 같이 accounts_user 테이블이 생성된 것을 확인할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| password   | varchar(128) | NO   |     | NULL    |                |
+| last_login | datetime(6)  | YES  |     | NULL    |                |
+| email      | varchar(255) | NO   | UNI | NULL    |                |
+| is_active  | tinyint(1)   | NO   |     | NULL    |                |
+| is_admin   | tinyint(1)   | NO   |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+</code></pre></div></div>
+<p>위와 같은 테이블 스키마가 만들어졌는데, email이 unique 필드로 들어간 것을 확인할 수 있다.</p>
+
+<p>생성된 테이블을 확인하고 다시 user를 생성해보면</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+----+-----------+------------+-----------------+-----------+----------+
+| id | password  | last_login | email           | is_active | is_admin |
++----+-----------+------------+-----------------+-----------+----------+
+|  1 | abcd1234! | NULL       | user1@gmail.com |         1 |        0 |
+|  2 | abcd1234! | NULL       | user2@gmail.com |         1 |        0 |
++----+-----------+------------+-----------------+-----------+----------+
+</code></pre></div></div>
+
+<p>다수의 user가 잘 들어가는 것을 확인할 수 있다.</p>
+
+<h3><참고></참고></h3>
+
+<ul>
+  <li>https://dev-yakuza.posstree.com/ko/django/custom-user-model/</li>
+</ul>
+:ET
