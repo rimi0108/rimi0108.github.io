@@ -1,6 +1,6 @@
 ---
-title: "Backend Roadmap 따라가기"
-excerpt: "백엔드 로드맵 차근 차근 따라가기 🚶‍♀️"
+title: "🚶‍♀️ Backend Roadmap 따라가기"
+excerpt: "백엔드 로드맵 차근 차근 따라가기"
 
 categories:
   - BackendRoadMap

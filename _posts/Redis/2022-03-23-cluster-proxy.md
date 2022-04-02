@@ -1,5 +1,5 @@
 ---
-title: "[Redis] Predixy를 이용하여 Cluster Proxy 구성하기"
+title: "🍒 [Redis] Predixy를 이용하여 Cluster Proxy 구성하기"
 excerpt: "Predixy를 이용하여 Cluster Proxy를 구성해보자. (+ HAProxy 삽질기)"
 
 categories:

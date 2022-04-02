@@ -1,5 +1,5 @@
 ---
-title: "[Django] QuerySet 이해하기 - Lazy Loading, Caching, Eager Loading"
+title: "📗 [Django] QuerySet 이해하기 - Lazy Loading, Caching, Eager Loading"
 excerpt: "Django QuerySet에 대해 알아보자"
 
 categories:

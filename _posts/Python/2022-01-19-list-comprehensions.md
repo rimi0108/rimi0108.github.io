@@ -1,5 +1,5 @@
 ---
-title: "[Python] 리스트 내포(list comprehensions)"
+title: "🐍 [Python] 리스트 내포(list comprehensions)"
 excerpt: "Python list comprehensions"
 
 categories:
