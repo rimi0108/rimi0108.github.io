@@ -1,5 +1,5 @@
 ---
-title: "[Authentication] CSRF, CSRF Token이란?"
+title: "🔐 [Authentication] CSRF, CSRF Token이란?"
 excerpt: "CSRF와 CSRF Token이란 무엇일까?"
 
 categories:

@@ -1,5 +1,5 @@
 ---
-title: "[HTTP 갉아먹기(2)] HTTP Method"
+title: "🚀 HTTP Method"
 excerpt: "HTTP Method에 대해 알아보자"
 
 categories:
