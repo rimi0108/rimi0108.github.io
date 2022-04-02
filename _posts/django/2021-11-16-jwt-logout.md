@@ -1,5 +1,5 @@
 ---
-title: "[Django] JWT로 로그아웃을 구현해보자"
+title: "📗 [Django] JWT로 로그아웃을 구현해보자"
 excerpt: "json web token으로 django에서 logout을 구현해보자"
 
 categories:

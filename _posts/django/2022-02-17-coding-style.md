@@ -1,5 +1,5 @@
 ---
-title: "[Django] 코딩 스타일 "
+title: "📗 [Django] 코딩 스타일 "
 excerpt: "Django 코드를 작성하는 스타일에 대해 알아보자"
 
 categories:

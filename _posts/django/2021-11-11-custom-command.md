@@ -1,5 +1,5 @@
 ---
-title: "[Django] Django Custom Command"
+title: "📗 [Django] Django Custom Command"
 excerpt: "Django Custom Command를 만들고 사용해보자!"
 
 categories:

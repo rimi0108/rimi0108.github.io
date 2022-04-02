@@ -1,5 +1,5 @@
 ---
-title: "[Django] Django-environ을 이용하여 SECRET_KEY 안전하게 보관하기"
+title: "📗 [Django] Django-environ을 이용하여 SECRET_KEY 안전하게 보관하기"
 excerpt: "SECRET_KEY를 안전하게 보관해보자"
 
 categories:
