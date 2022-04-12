@@ -6,13 +6,6 @@
    Typography
    ========================================================================== */
 
-@font-face {
-   font-family: 'NanumSquareRound';
-   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-   font-weight: normal;
-   font-style: normal;
-}
-
 $doc-font-size: 16 !default;
 
 /* paragraph indention */
@@ -36,8 +29,8 @@ $bodoni: "Bodoni MT", serif !default;
 $calisto: "Calisto MT", serif !default;
 $garamond: Garamond, serif !default;
 
-$global-font-family: 'NanumSquareRound' !default;
-$header-font-family: 'NanumSquareRound' !default;
+$global-font-family: $sans-serif !default;
+$header-font-family: $sans-serif !default;
 $caption-font-family: $serif !default;
 
 /* type scale */
@@ -162,9 +155,9 @@ $max-width: $x-large !default;
    Grid
    ========================================================================== */
 
-$right-sidebar-width-narrow: 250px !default;
-$right-sidebar-width: 270px !default;
-$right-sidebar-width-wide: 300px !default;
+$right-sidebar-width-narrow: 200px !default;    // default 200px
+$right-sidebar-width: 300px !default;           // default 300px
+$right-sidebar-width-wide: 400px !default;      // default 400px
 
 /*
    Other

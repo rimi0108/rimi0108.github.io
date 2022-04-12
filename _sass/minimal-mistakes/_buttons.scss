@@ -7,10 +7,13 @@
    ========================================================================== */
 
 @font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 0;
+  word-break: keep-all;
+  font-feature-settings: normal;
+  text-rendering: optimizeLegibility;
+  font-display: swap;
 }  
 
 .btn {
@@ -18,7 +21,7 @@
   display: inline-block;
   margin-bottom: 0.25em;
   padding: 0.5em 1em;
-  font-family: 'NanumSquareRound';
+  font-family: $sans-serif;
   font-size: $type-size-6;
   font-weight: bold;
   text-align: center;

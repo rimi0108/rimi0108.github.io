@@ -3,10 +3,13 @@
    ========================================================================== */
 
 @font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 0;
+  word-break: keep-all;
+  font-feature-settings: normal;
+  text-rendering: optimizeLegibility;
+  font-display: swap;
 }
 
 .archive {
@@ -52,7 +55,7 @@
 
 .archive__item-title {
   margin-bottom: 0.25em;
-  font-family: 'NanumSquareRound';
+  font-family: $sans-serif-narrow;
   line-height: initial;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -109,7 +112,7 @@
   margin: 0 auto;
   padding: 2px 5px;
   color: #fff;
-  font-family: 'NanumSquareRound';
+  font-family: $caption-font-family;
   font-size: $type-size-8;
   background: #000;
   text-align: right;

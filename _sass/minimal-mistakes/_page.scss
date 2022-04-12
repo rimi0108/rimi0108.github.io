@@ -2,13 +2,6 @@
    SINGLE PAGE/POST
    ========================================================================== */
 
-@font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 #main {
   @include clearfix;
   margin-left: auto;
@@ -105,7 +98,7 @@ body {
 			position: relative;
 			left: 0.5em;
 			opacity: 0;
-			font-size: 0.8em;
+			font-size: 0.65em;
 			-webkit-transition: opacity 0.2s ease-in-out 0.1s;
 			-moz-transition: opacity 0.2s ease-in-out 0.1s;
 			-o-transition: opacity 0.2s ease-in-out 0.1s;
@@ -120,7 +113,7 @@ body {
   p,
   li,
   dl {
-    font-size: 1em;
+    font-size: 0.95em;
   }
 
   /* paragraph indents */
@@ -239,7 +232,7 @@ body {
   margin: 0 auto;
   padding: 2px 5px;
   color: #fff;
-  font-family: 'NanumSquareRound';
+  font-family: $caption-font-family;
   font-size: $type-size-7;
   background: #000;
   text-align: right;
@@ -293,7 +286,7 @@ body {
 .page__meta {
   margin-top: 2em;
   color: $muted-text-color;
-  font-family: 'NanumSquareRound';
+  font-family: $sans-serif;
   font-size: $type-size-6;
 
   p {
