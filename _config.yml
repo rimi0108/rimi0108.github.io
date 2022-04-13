@@ -16,7 +16,7 @@ minimal_mistakes_skin: "custom" # "air", "aqua", "contrast", "dark", "dirt", "ne
 
 # Site Settings
 locale: "en-US"
-title: "rimlog 🧚🏻"
+title: "rimlog"
 title_separator: "-"
 subtitle: # site tagline that appears below site title in masthead
 name: "Rim"
