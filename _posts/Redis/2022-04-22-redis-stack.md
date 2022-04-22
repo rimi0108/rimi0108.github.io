@@ -89,8 +89,8 @@ Redis와 RedisStack이 잘 연결되었는지 확인해 보기 위해 연결한 
 
 ### <참고>
 
-[Hello, Redis Stack | Redis](https://redis.com/blog/introducing-redis-stack/)
+[Hello, Redis Stack - Redis](https://redis.com/blog/introducing-redis-stack/)
 
-[Introduction to Redis Stack | Redis Developer Hub](https://developer.redis.com/create/redis-stack)
+[Introduction to Redis Stack - Redis Developer Hub](https://developer.redis.com/create/redis-stack)
 
 [redis repl-timeout parameter](http://redisgate.kr/redis/configuration/param_repl-timeout.php)
