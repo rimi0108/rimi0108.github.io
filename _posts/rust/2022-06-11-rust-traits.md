@@ -147,10 +147,13 @@ struct User {
   ```
 
 - 스트링(string)
+
   - 문자(character)의 모음이다.
+
   ```rust
   let mut s = String::new();
   ```
+
 - 해쉬맵(hash map)
 
   - 어떤 값을 특정한 키와 연관지어 주도록 한다.
