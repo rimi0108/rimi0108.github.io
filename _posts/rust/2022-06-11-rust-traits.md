@@ -10,8 +10,8 @@ tags:
 toc: true
 toc_sticky: true
 
-date: 2021-10-08
-last_modified_at: 2021-11-13
+date: 2022-06-11
+last_modified_at: 2022-06-11
 ---
 
 ![image](https://user-images.githubusercontent.com/73830753/173180448-cdab95f7-37b1-4f13-9f31-a27d879b4cc9.png)
@@ -137,20 +137,25 @@ struct User {
 러스트 프로그램에는 굉장히 자주 사용되는 세 가지 컬렉션이 있다.
 
 - 벡터(vector)
+
   - 여러 개의 값을 서로 붙어 있게 저장할 수 있도록 해준다.
+
   ```rust
   let v: Vec<i32> = Vec::new();
 
   let v2 = vec![1, 2, 3];
   ```
+
 - 스트링(string)
   - 문자(character)의 모음이다.
   ```rust
   let mut s = String::new();
   ```
 - 해쉬맵(hash map)
+
   - 어떤 값을 특정한 키와 연관지어 주도록 한다.
   - 이는 맵(map)이라 일컫는 좀 더 일반적인 데이터 구조의 특정한 구현 형태이다.
+
   ```rust
   use std::collections::HashMap;
 
