@@ -14,7 +14,9 @@ date: 2022-06-11
 last_modified_at: 2022-06-11
 ---
 
-![image](https://user-images.githubusercontent.com/73830753/173180448-cdab95f7-37b1-4f13-9f31-a27d879b4cc9.png)
+<!-- ![image](https://user-images.githubusercontent.com/73830753/173180448-cdab95f7-37b1-4f13-9f31-a27d879b4cc9.png) -->
+
+<p align="center"><img src="https://user-images.githubusercontent.com/73830753/173180448-cdab95f7-37b1-4f13-9f31-a27d879b4cc9.png" width="400" height="250"/></p>
 
 [https://rustacean.net/](https://rustacean.net/)
 
