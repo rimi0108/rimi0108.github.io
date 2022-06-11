@@ -276,7 +276,7 @@ defaults:
       author_profile: false
       read_time: false
       comments: true
-      share: true
+      share: false
       related: true
       sidebar_main: false
       # https://applause-button.com/

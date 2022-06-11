@@ -54,6 +54,8 @@ layout: default
         {% include page__date.html %}
       </footer>
 
+      {% if page.applause_button %}{% include components/dingbat.html %}{% endif %}
+
       {% if page.share %}{% include social-share.html %}{% endif %}
 
       {% include post_pagination.html %}
@@ -63,18 +65,6 @@ layout: default
       {% include comments.html %}
     {% endif %}
   </article>
-
-  <div style="margin-left:75%; position: absolute; text-align:-webkit-center;">
-    {% if page.applause_button %}
-      <!-- add the button! -->
-      <applause-button 
-      color="#35a8ad"
-        style="width: 58px; height: 58px;"
-        url="{{ site.url }}{{ page.url }}" />
-        <br><br><small><p>Was this 
-          content helpful?</p></small>
-{% endif %}
-  </div>
 
   {% comment %}<!-- only show related on a post page when `related: true` -->{% endcomment %}
   {% if page.id and page.related and site.related_posts.size > 0 %}

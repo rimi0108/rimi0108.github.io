@@ -1,8 +1,15 @@
+<section class="page__share">
 {% if page.applause_button %}
-  <applause-button class="mb6"
-    color={{ site.accent_color | default:'rgb(79,177,186)' }}
-    url={{ post.url | absolute_url }} >
-  </applause-button>
+<center>
+<h4 class="page__share-title">Was this 
+  content helpful? 💖</h4>
+  <br/>
+<applause-button 
+color="#38cb75"
+  style="width: 60px; height: 60px;"
+  url="{{ site.url }}{{ page.url }}" />
+  </center>
 {% else %}
   <!-- original content of dingbat.html -->
 {% endif %}
+</section>
