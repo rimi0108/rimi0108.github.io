@@ -279,4 +279,5 @@ defaults:
       share: true
       related: true
       sidebar_main: false
-
+      # https://applause-button.com/
+      applause_button: true
